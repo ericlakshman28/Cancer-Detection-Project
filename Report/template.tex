@@ -1,0 +1,183 @@
+\documentclass{article}
+
+% if you need to pass options to natbib, use, e.g.:
+% \PassOptionsToPackage{numbers, compress}{natbib}
+% before loading nips_2016
+%
+% to avoid loading the natbib package, add option nonatbib:
+% \usepackage[nonatbib]{nips_2016}
+
+\PassOptionsToPackage{numbers,sort&compress}{natbib}
+\usepackage[final]{nips_2016} % produce camera-ready copy
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{algorithm}      % algorithm
+\usepackage{algorithmic}    % algorithm
+\usepackage{graphicx}       % graphics
+
+\title{Individual Project Title}
+
+\author{
+  Student number\\
+  \texttt{s.lastname@qmul.ac.uk} \\
+  QMUL StudentID\\
+  %% examples of more authors
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This section should give an overview of the project context, aims and objectives, and main contributions (e.g., deliverables) and achievements. The goal is to ensure the reader is clear about what the topic is, what you have done within this topic, and what your view of the outcome is. 
+
+The abstract should be 200-250 words.
+\end{abstract}
+
+\section{Instructions [REMOVE THIS SECTION FROM FINAL SUBMISSION]}
+
+The report should use this template and be \textbf{minimum 6 pages} in length. Do not change the font size or layout.
+
+Structuring the text as follows is recommended, but not mandatory.
+
+\section{Introduction}
+This section should introduce the project context and motivate each of the proposed aims and objectives.  Ideally, it is written at a fairly high-level, and easily understood by a reader who is technically competent but not an expert in the topic itself.
+
+In short, the goal is to provide details on the following three points for the reader:
+\begin{itemize}
+  \item what is the problem being investigated?  
+  \item why is the topic important, or rather why should the reader care about it?  For example, why there is a need for this project (e.g., lack of similar software or deficiency in existing software), who will benefit from the project and in what way (e.g., end-users, or software developers) what work does the project build on and why is the selected approach either important and/or interesting (e.g., fills a gap in literature, applies results from another field to a new problem).  
+  \item Finally, what are the central challenges involved and why are they significant? 
+\end{itemize}
+
+\section{Related Work}
+Description of relevant background and related previous work. Explanation of the limitations of each previous work. An existing algorithm that you use, alternative solutions proposed, supporting technologies, etc. 
+
+After reading this section, a non-expert reader should be able to obtain enough background to understand what \emph{you} have done (by reading subsequent sections), then accurately assess your work against existing relevant related work. 
+
+Just listing and explaining them is not good enough; from the Introduction section it should be clear that there is a missing gap, which is elaborated on in the related work.
+
+\section{Proposed Methodology}
+This section should provide a clear, detailed, and technically rigorous description of the proposed method. It should explain the algorithms (Machine learning or deep learning models), mathematical methods, and data processing steps in enough detail for a knowledgeable reader to reproduce and verify the work. 
+
+Organize this section into logical subsections, beginning with an overview of the overall approach before describing each component step by step, ensuring each subsection builds on previously introduced concepts. For example, your subsection could be: Hypothesis, Problem Statement, Model Selection, Data Processing, Evaluation Criteria. 
+
+This section can also include relevant mathematical formulas where appropriate. 
+
+Focus on the formal and algorithmic aspects of the solution rather than programming or implementation details, which should be reserved for the implementation section. Notice the format for Algorithm~\ref{alg}. 
+
+\begin{algorithm}
+    \begin{algorithmic}
+        \IF{some condition is true}
+            \STATE do some processing
+        \ELSIF{some other condition is true}
+            \STATE do some different processing
+        \ELSE
+            \STATE do the default actions
+        \ENDIF
+    \end{algorithmic}
+\caption{This is an example algorithm.}
+\label{alg}
+\end{algorithm}
+
+\section{Implementation}
+The implementation section focuses on the major programming problems and details such as the overall organization of the source code, major dependencies, etc. This should be kept concise and should be developed top-down, focusing on anything that is maybe not standard good practice, or that has a non-obvious implementation. 
+
+An appendix (C) can be used for more details if needed, which will not be counted in the report page limit. 
+
+\section{Results and Discussion}
+This section discusses the proposed and existing methods/models in the light of the initially stated problem requirements and limitations. 
+
+This typically involves some sort of experimental evaluation which leads to some type of qualitative or quantitative results. 
+
+\textbf{Quantitative results} include observed numbers indicating performance timings (processing speed) or accuracy measures of the given implementation and test datasets. If possible, statistical tests and analysis should be given, or, where applicable, formal proofs. Meaningful and informative numerical results must be complete and unambiguous. 
+
+Explain in detail how the evaluation has been designed, as well as the experimental setup and test cases. This includes an accurate description of the \textbf{training, validation, and testing data (type, properties, size, etc.)} as well as the evaluation metrics (accuracy, precision, recall, etc.). Example Table~\ref{tab} provided below:
+
+\begin{table}[t]
+\centering
+\begin{tabular}{|cc|c|}
+\hline
+Model      & Accuracy      & Precision      \\
+\hline
+$0     $ & $0     $ & $0     $ \\
+$1     $ & $1     $ & $1     $ \\
+$\vdots$ & $\vdots$ & $\vdots$ \\
+$9     $ & $9     $ & $9     $ \\
+\hline
+\end{tabular}
+\caption{This is an example table.}
+\label{tab}
+\end{table}
+
+\textbf{Qualitative results} may be reported if applicable. Qualitative results clearly show the features and functionality of the completed work, indicating if and how they are novel or different from prior work. Qualitative results are especially suitable if something new has been achieved that no-one has done before in the same way. Example Figure~\ref{fig} provided below:
+\begin{figure}[t]
+\centering
+\centering
+    \includegraphics[width=0.3\textwidth]{example-image.png}
+\caption{This is an example Graph figure.}
+\label{fig}
+\end{figure}
+
+Essentially, the goal of the experimental results is to convince the reader by numbers, tests and images (and maybe user studies), giving some sort of proof why the proposed solution is good, different and/or better than other solutions.
+
+\section{Conclusion}
+The Conclusion section puts the results in perspective, discussing them in relation to other related work in one or at most two paragraphs. Indicate possible (side-)effects and eventual limitations due to the evaluation, but try to keep yourself short and clear. 
+
+Give a short discussion about your results where you focus on what your findings mean. E.g., show how your results and interpretations agree with the original problem question and with other published work, or if there are any other practical applications for your work. 
+
+State the take-home message of the project that the reader should remember and provide an outlook on possible future work that extends the given solution or fixes specific limitations. 
+
+Close with a brief description \textbf{(that is different from the Abstract)} of the proposed solution.
+
+\section{Use of AI Declaration}
+I declare that any AI (or GenAI) usage within the project has been recorded and noted within Appendix B or within the main body of the text itself. This includes (but is not limited to) usage of text generation methods including LLMs, text summarisation methods, or image generation methods.
+I understand that failing to divulge use of AI within my work counts as contract cheating and can result in a zero mark for the ECS7036p Individual Project or even failing the module. 
+
+Signature: [Type your name here]
+
+\section*{Citations and References [REMOVE THIS SECTION FROM FINAL SUBMISSION]}
+You can manage your bibliography---adding citations and references to other work---through BibTeX.
+Please see \url{https://www.overleaf.com/learn/latex/Bibliography_management_with_bibtex} for guidance.
+
+This template presents the minimal example of how to use it here.
+
+\LaTeX{} \cite{latex2e} is a set of macros built atop \TeX{} \cite{texbook}.
+
+\bibliography{refs.bib}
+\bibliographystyle{plain}
+
+\appendix
+
+\section{Appendix A: Reflection}
+\label{appx:reflection}
+
+\textbf{This is a COMPULSORY Appendix. This is not included in the Page Limit [REMOVE THIS LINE FROM FINAL SUBMISSION]}
+
+Reflection is the last part of your report. Include any challenges you faced and how they were resolved. Also, include what you learned from this project. 
+
+Reflection should be at least 500 words. 
+
+\section{Appendix B: AI Prompts/Tools}
+\label{appx:ai_prompt}
+
+\textbf{This is a COMPULSORY Appendix. This is not included in the Page Limit [REMOVE THIS LINE FROM FINAL SUBMISSION]}
+
+List of prompts/tools/references that were used in the project and/or report with an Artificial Intelligence (or GenAI) model. This can include Large Language Models (LLMs such as ChatGPT, Claude, Gemini, etc.) image/video generation tools, or AI summarisation Tools.
+
+\textbf{Failure to include this list can result in Academic Misconduct. [REMOVE THIS LINE FROM FINAL SUBMISSION]}
+
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
