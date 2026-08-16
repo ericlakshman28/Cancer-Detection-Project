@@ -206,6 +206,4 @@ The dataset is **not included in this repository** (several GB). Download it and
 5. Muhammad, D., & Bendechache, M. (2024). *Unveiling the black box: a systematic review of explainable artificial intelligence in medical image analysis.* Computational and Structural Biotechnology Journal, 24, 542–560. https://doi.org/10.1016/j.csbj.2024.08.005
 6. CBIS-DDSM: Breast Cancer Image Dataset. Kaggle. https://www.kaggle.com/datasets/awsaf49/cbis-ddsm-breast-cancer-image-dataset
 
-## License
 
-This project is for academic coursework (ECS7036P). Add a license here if you intend to open-source it (e.g. MIT).
