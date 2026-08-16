@@ -1,5 +1,5 @@
 [README (2).md](https://github.com/user-attachments/files/31124306/README.2.md)
-# 🩺 Explainable AI for Breast Cancer Detection Using Mammograms
+# Explainable AI for Breast Cancer Detection Using Mammograms
 
 An explainable, multimodal deep learning pipeline for breast cancer classification on the **CBIS-DDSM** dataset — comparing multiple backbone architectures, fusing image features with structured clinical data, and explaining every prediction with **Grad-CAM, LIME, and SHAP**.
 
