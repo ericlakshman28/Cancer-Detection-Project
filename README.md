@@ -135,7 +135,7 @@ Then load with `models.load_trained_model(path, mode, clinical_input_dim)`, or `
 
 ### Option A — Notebook (recommended, Colab/Kaggle-friendly)
 
-1. Open `breast_cancer_xai.ipynb` in Google Colab or Kaggle Notebooks.
+1. Open `250733547` in Google Colab.
 2. Set the runtime to GPU.
 3. Run the cells top to bottom. The dataset-location cell auto-detects (or downloads via `kagglehub`) the CBIS-DDSM files — see [Dataset](#dataset) below.
 
