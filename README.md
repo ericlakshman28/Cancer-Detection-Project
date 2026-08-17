@@ -185,15 +185,15 @@ The dataset is **not included in this repository** (several GB). Download it and
 ## Tech stack
 
 - **PyTorch** / **Torchvision** — ResNet50, EfficientNetV2, ViT transfer learning
-- **OpenCV** — CLAHE, artefact removal
-- **scikit-learn** — metrics, calibration, one-hot encoding, patient-level splitting
-- **SHAP**, **LIME**, **scikit-image** — explainability
+- **OpenCV**  CLAHE, artefact removal
+- **scikit-learn**  metrics, calibration, one-hot encoding, patient-level splitting
+- **SHAP**, **LIME**, **scikit-image**  explainability
 - **Matplotlib / Seaborn** — evaluation and explanation plots
 
 ## Limitations & future work
 
 - Relies on a single public dataset (CBIS-DDSM), which may limit generalisability to other imaging equipment/populations.
-- Observed run-to-run variance in baseline performance — patient-level k-fold cross-validation would give a more robust performance estimate than a single split.
+- Observed run-to-run variance in baseline performance  patient-level k-fold cross-validation would give a more robust performance estimate than a single split.
 - Threshold tuning (choosing a cutoff targeting a specific recall, e.g. ≥95%) is a natural next step given the strong underlying ROC-AUC.
 - Future work: extend fusion beyond simple feature concatenation (e.g. attention-based fusion), and explore counterfactual or case-based explanations as a further clinically-oriented explainability layer.
 
