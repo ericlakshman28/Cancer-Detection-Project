@@ -228,7 +228,9 @@ The dataset is **not included in this repository** (several GB). Download it and
 [11] Sossavi, E., Roy, C., & Molière, S. (2026). Artificial intelligence in breast cancer screening: A systematic review and meta-analysis of integration strategies. European Journal of Radiology Open, 16, 100727. https://doi.org/10.1016/j.ejro.2026.100727
 
 [12] Sandeep Saharan, Wani, N. A., Chatterji, S., Kumar, N., & Abdullah Mohammed Almuhaideb. (2025). A Deep Learning and Explainable Artificial Intelligence based Scheme for Breast Cancer Detection. Scientific Reports, 15(1). https://doi.org/10.1038/s41598-024-80535-7
+
 [13]Hernström, V., Viktoria Josefsson, Sartor, H., Schmidt, D., Larsson, A.-M., Solveig Hofvind, Andersson, I., Rosso, A., Hagberg, O., & Lång, K. (2025). Screening performance and characteristics of breast cancer detected in the Mammography Screening with Artificial Intelligence trial (MASAI): a randomised, controlled, parallel-group, non-inferiority, single-blinded, screening accuracy study. The Lancet Digital Health, 7(3). https://doi.org/10.1016/s2589-7500(24)00267-x
+
 [14] Lauritzen, A. D., von Euler-Chelpin, M. C., Lynge, E., Vejborg, I., Nielsen, M., Karssemeijer, N., & Lillholm, M. (2023). Assessing Breast Cancer Risk by Combining AI for Lesion Detection and Mammographic Texture. Radiology, 308(2). https://doi.org/10.1148/radiol.230227
 
 [15] Añez, D., Conti, G., Uriarte, J. J., Serrano-Olmedo, J.-J., Martínez-Murillo, R., & Casanova-Carvajal, O. (2025). Artificial Intelligence Pipeline for Mammography-Based Breast Cancer Detection: An Integrated Systematic Review and Large-Scale Experimental Validation. Medicina, 61(12), 2237. https://doi.org/10.3390/medicina61122237
