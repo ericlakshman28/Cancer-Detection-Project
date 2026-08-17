@@ -1,5 +1,5 @@
 [README (2).md](https://github.com/user-attachments/files/31136888/README.2.md)
-# 🩺 Explainable AI for Breast Cancer Detection Using Mammograms
+# Explainable AI for Breast Cancer Detection Using Mammograms
 
 An explainable, multimodal deep learning pipeline for breast cancer classification on the **CBIS-DDSM** dataset — comparing multiple backbone architectures, fusing image features with structured clinical data, and explaining every prediction with **Grad-CAM, LIME, and SHAP**.
 
@@ -199,13 +199,36 @@ The dataset is **not included in this repository** (several GB). Download it and
 
 ## References
 
-1. Liao, L., & Aagaard, E. M. (2024). *An open codebase for enhancing transparency in deep learning-based breast cancer diagnosis utilizing CBIS-DDSM data.* Scientific Reports, 14(1). https://doi.org/10.1038/s41598-024-78648-0
-2. Ghasemi, A., Hashtarkhani, S., Schwartz, D. L., & Shaban-Nejad, A. (2024). *Explainable artificial intelligence in breast cancer detection and risk prediction: A systematic scoping review.* Cancer Innovation, 3(5). https://doi.org/10.1002/cai2.136
-3. Nakach, F.-Z., Idri, A., & Goceri, E. (2024). *A comprehensive investigation of multimodal deep learning fusion strategies for breast cancer classification.* Artificial Intelligence Review, 57(12). https://doi.org/10.1007/s10462-024-10984-z
-4. Murty, P. S. R. C., et al. (2024). *Integrative hybrid deep learning for enhanced breast cancer diagnosis: leveraging the Wisconsin Breast Cancer Database and the CBIS-DDSM dataset.* Scientific Reports, 14(1). https://doi.org/10.1038/s41598-024-74305-8
-5. Muhammad, D., & Bendechache, M. (2024). *Unveiling the black box: a systematic review of explainable artificial intelligence in medical image analysis.* Computational and Structural Biotechnology Journal, 24, 542–560. https://doi.org/10.1016/j.csbj.2024.08.005
-6. CBIS-DDSM: Breast Cancer Image Dataset. Kaggle. https://www.kaggle.com/datasets/awsaf49/cbis-ddsm-breast-cancer-image-dataset
+[1] Cancer Research UK. (2022). Breast cancer statistics. In Cancer Research UK. Cancer Research UK. https://www.cancerresearchuk.org/health-professional/cancer-statistics/statistics-by-cancer-type/breast-cancer
 
-## License
+[2] Murty, P. S. R. C., Anuradha, C., Naidu, P. A., Mandru, D., Ashok, M., Atheeswaran, A., Rajeswaran, N., Saravanan, V. (2024). Integrative hybrid deep learning for enhanced breast cancer diagnosis: leveraging theWisconsin Breast Cancer Database and the CBIS-DDSM dataset. Scientific Reports, 14(1). https://doi.org/10.1038/s41598-024-74305-8
 
-This project is for academic coursework (ECS7036P). Add a license here if you intend to open-source it (e.g. MIT).
+[3] Fatima-Zahrae Nakach, Idri, A., & Evgin Goceri. (2024). A comprehensive investigation of multimodal deep learning fusion strategies for breast cancer classification. Artificial Intelligence Review, 57(12). https://doi.org/10.1007/s10462-024-10984-z
+
+[4] Ghasemi, A., Hashtarkhani, S., Schwartz, D. L., & Shaban‐Nejad, A. (2024). Explainable artificial intelligence in breast cancer detection and risk prediction: A systematic scoping review. Cancer Innovation, 3(5). https://doi.org/10.1002/cai2.136
+
+[5] CBIS-DDSM: Breast Cancer Image Dataset. (n.d.). In www.kaggle.com. Retrieved August 17, 2026, from https://www.kaggle.com/datasets/awsaf49/cbis-ddsm-breast-cancer-image-dataset
+
+ [6] Ahmed, S., Naira Elazab, El-Gayar, M. M., Elmogy, M., & Fouda, Y. M. (2025). Multi-Scale Vision Transformer with Optimized Feature Fusion for Mammographic Breast Cancer Classification. Diagnostics, 15(11), 1361–1361. https://doi.org/10.3390/diagnostics15111361
+
+[7] Al-Hejri, A. M., Sable, A. H., Al-Tam, R. M., Al-antari, M. A., Alshamrani, S. S., Alshmrany, K. M., & Alatebi, W. (2025). A hybrid explainable federated-based vision transformer framework for breast cancer prediction via risk factors. Scientific Reports, 15(1). https://doi.org/10.1038/s41598-025-96527-0
+
+ [8]Ali, A., Alghamdi, M., Marzuki, S., Tengku Din, T. A., Yamin, M. S., Alrashidi, M., Alkhazi, I., & Ahmed, N. (2025). Exploring AI Approaches for Breast Cancer Detection and Diagnosis: A Review Article. Breast Cancer: Targets and Therapy, Volume 17, 927–947. https://doi.org/10.2147/bctt.s550307
+
+ [9]Ahn, J. S., Shin, S., Yang, S.-A., Park, E., Kim, K. H., Cho, S. I., Ock, C. Y., & Kim, S. (2023). Artificial Intelligence in Breast Cancer Diagnosis and Personalized Medicine. Journal of Breast Cancer, 26(5). https://doi.org/10.4048/jbc.2023.26.e45
+
+ [10]Zhang, Y., Liu, Y.-L., Nie, K., Zhou, J., Chen, Z., Chen, J.-H., Wang, X., Kim, B., Parajuli, R., Mehta, R. S., Wang, M., & Su, M.-Y. (2023). Deep Learning-based Automatic Diagnosis of Breast Cancer on MRI Using Mask R-CNN for Detection Followed by ResNet50 for Classification. Academic Radiology, 30 Suppl 2(Suppl 2), S161–S171. https://doi.org/10.1016/j.acra.2022.12.038
+
+ [11] Sossavi, E., Roy, C., & Molière, S. (2026). Artificial intelligence in breast cancer screening: A systematic review and meta-analysis of integration strategies. European Journal of Radiology Open, 16, 100727. https://doi.org/10.1016/j.ejro.2026.100727
+
+ [12] Sandeep Saharan, Wani, N. A., Chatterji, S., Kumar, N., & Abdullah Mohammed Almuhaideb. (2025). A Deep Learning and Explainable Artificial Intelligence based Scheme for Breast Cancer Detection. Scientific Reports, 15(1). https://doi.org/10.1038/s41598-024-80535-7
+
+[13]Hernström, V., Viktoria Josefsson, Sartor, H., Schmidt, D., Larsson, A.-M., Solveig Hofvind, Andersson, I., Rosso, A., Hagberg, O., & Lång, K. (2025). Screening performance and characteristics of breast cancer detected in the Mammography Screening with Artificial Intelligence trial (MASAI): a randomised, controlled, parallel-group, non-inferiority, single-blinded, screening accuracy study. The Lancet Digital Health, 7(3). https://doi.org/10.1016/s2589-7500(24)00267-x
+
+[14] Lauritzen, A. D., von Euler-Chelpin, M. C., Lynge, E., Vejborg, I., Nielsen, M., Karssemeijer, N., & Lillholm, M. (2023). Assessing Breast Cancer Risk by Combining AI for Lesion Detection and Mammographic Texture. Radiology, 308(2). https://doi.org/10.1148/radiol.230227
+
+  [15] Añez, D., Conti, G., Uriarte, J. J., Serrano-Olmedo, J.-J., Martínez-Murillo, R., & Casanova-Carvajal, O. (2025). Artificial Intelligence Pipeline for Mammography-Based Breast Cancer Detection: An Integrated Systematic Review and Large-Scale Experimental Validation. Medicina, 61(12), 2237. https://doi.org/10.3390/medicina61122237
+<img width="468" height="628" alt="image" src="https://github.com/user-attachments/assets/c732730a-0150-4cdf-9c23-d3d0d5c843e1" />
+
+
+
