@@ -228,7 +228,7 @@ The dataset is **not included in this repository** (several GB). Download it and
 [14] Lauritzen, A. D., von Euler-Chelpin, M. C., Lynge, E., Vejborg, I., Nielsen, M., Karssemeijer, N., & Lillholm, M. (2023). Assessing Breast Cancer Risk by Combining AI for Lesion Detection and Mammographic Texture. Radiology, 308(2). https://doi.org/10.1148/radiol.230227
 
   [15] Añez, D., Conti, G., Uriarte, J. J., Serrano-Olmedo, J.-J., Martínez-Murillo, R., & Casanova-Carvajal, O. (2025). Artificial Intelligence Pipeline for Mammography-Based Breast Cancer Detection: An Integrated Systematic Review and Large-Scale Experimental Validation. Medicina, 61(12), 2237. https://doi.org/10.3390/medicina61122237
-<img width="468" height="628" alt="image" src="https://github.com/user-attachments/assets/c732730a-0150-4cdf-9c23-d3d0d5c843e1" />
+
 
 
 
