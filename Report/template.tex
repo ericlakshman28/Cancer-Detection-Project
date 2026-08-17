@@ -1,4 +1,4 @@
-\documentclass{article}
+documentclass{article}
 
 % if you need to pass options to natbib, use, e.g.:
 % \PassOptionsToPackage{numbers, compress}{natbib}
@@ -22,13 +22,13 @@
 \usepackage{algorithmic}    % algorithm
 \usepackage{graphicx}       % graphics
 
-\title{Individual Project Title}
+\title{Explainable AI for Breast Cancer Detection Using Mammograms}
 
 \author{
-  Student number\\
-  \texttt{s.lastname@qmul.ac.uk} \\
-  QMUL StudentID\\
-  %% examples of more authors
+  Eric Kamalendran\\
+  \texttt{Ec251192@qmul.ac.uk} \\
+  250733547\\
+  \url{https://github.com/ericlakshman28/Cancer-Detection-Project}
 }
 
 \begin{document}
@@ -36,144 +36,260 @@
 \maketitle
 
 \begin{abstract}
-This section should give an overview of the project context, aims and objectives, and main contributions (e.g., deliverables) and achievements. The goal is to ensure the reader is clear about what the topic is, what you have done within this topic, and what your view of the outcome is. 
-
-The abstract should be 200-250 words.
+Breast cancer is among the most common cancers diagnosed in women throughout the world, and the effectiveness of screening with mammography relies on accurate and rapid interpretation. Results with high accuracy obtained with deep convolutional neural networks are essentially a black box, and provide little information to the clinician regarding the basis for the prediction. The goal was to develop a multimodal deep learning system to explain the classification of masses on mammograms as benign or malignant for the CBIS-DDSM data set. For this purpose, the researchers first developed an image-only baseline with ResNet50, and subsequently incorporated information from structured clinical variables to obtain a multimodal model. Finally, they evaluated and compared three alternative designs for the image component under identical conditions for the training budget, to determine which architecture provided the best generalization for this application. Three candidate image backbones were also compared with equal training budgets to determine which architecture achieved the greatest generalization to this domain. The multimodal model achieved 82.3\% accuracy and 0.911 ROC-AUC, representing a large improvement over 66.0\% accuracy and 0.708 ROC-AUC obtained with the image-only baseline and consistent with the view that clinical context substantially improves diagnostic performance. Explainability was obtained with Grad-CAM and LIME for the image pathway and with SHAP for the clinical pathway. Quantitative assessment of the fidelity of image pathway Grad-CAM highlights confirmed that these regions actually affected model predictions.
 \end{abstract}
 
-\section{Instructions [REMOVE THIS SECTION FROM FINAL SUBMISSION]}
-
-The report should use this template and be \textbf{minimum 6 pages} in length. Do not change the font size or layout.
-
-Structuring the text as follows is recommended, but not mandatory.
-
 \section{Introduction}
-This section should introduce the project context and motivate each of the proposed aims and objectives.  Ideally, it is written at a fairly high-level, and easily understood by a reader who is technically competent but not an expert in the topic itself.
+Breast cancer is one of the most commonly diagnosed cancers among women, and approximately one in seven women will develop it during their lifetime \citep{crukstats}. Mammography screening is the principal method for detecting the disease at an early stage, and early diagnosis strongly influences survival. However, interpretation of mammograms is by no means straightforward. Malignant masses and calcifications are often indistinguishable from normal, dense breast tissue, and there is considerable disagreement regarding equivocal cases among even experienced observers.
 
-In short, the goal is to provide details on the following three points for the reader:
-\begin{itemize}
-  \item what is the problem being investigated?  
-  \item why is the topic important, or rather why should the reader care about it?  For example, why there is a need for this project (e.g., lack of similar software or deficiency in existing software), who will benefit from the project and in what way (e.g., end-users, or software developers) what work does the project build on and why is the selected approach either important and/or interesting (e.g., fills a gap in literature, applies results from another field to a new problem).  
-  \item Finally, what are the central challenges involved and why are they significant? 
-\end{itemize}
+This represents precisely the type of problem of pattern recognition for which convolutional neural networks are particularly well suited. As a result, performance with very high accuracy has been achieved for classification of mammograms by CNN-based methods. However, high accuracy alone is insufficient for clinical applications. A model that generates a diagnosis of ``malignant'' without capacity for explanation is of limited utility for the radiologist, who must provide a basis for the diagnosis and cannot simply rely on output from a neural network.
+
+This constitutes the so-called ``black box'' problem, and represents a major impediment to implementation of deep learning models within actual clinical practice. Absence of ability to visualize the features of the image to which the model is responding precludes reliable assessment of whether the model is responding to the actual lesion or to an incidental artifact of the imaging process. In addition, a major limitation of most methods for classification of mammograms by CNNs is that they evaluate only the image. In fact, radiologists interpret mammograms in the context of additional information regarding breast density, morphology and margin characteristics of any visible mass, and overall impressions of the degree of suspicion associated with the findings.
+
+Recent work indicates that integration of image features with this type of structured clinical information represents an approach that provides greater classification performance than image-only methods, because clinical variables convey information not completely recoverable from the pixel data. Here, both limitations are addressed simultaneously. The goal was to develop a multimodal deep learning system for classification of breast masses from the CBIS-DDSM database as benign or malignant, based on both mammographic images and structured clinical data, and to apply a true mechanism for explainability rather than merely to append a single heat map at the end of training.
+
+To accomplish this, three objectives needed to be achieved: First, to establish a reliable basis for comparison with the multimodal results; second, to demonstrate that the multimodal model achieved true improvement in performance over the image-only baseline; and third, to obtain sufficient information from the mechanisms of explainability to provide a meaningful interpretation of the reasons for model predictions, rather than simply to generate an appearance of reasonable explanation. Finally, the major difficulty was less with obtaining a system that would train at all, and more with ensuring that all comparisons within the project (i.e., between image-only and multimodal methods, among different architectures and mechanisms of explainability) were made in a completely fair manner.
 
 \section{Related Work}
-Description of relevant background and related previous work. Explanation of the limitations of each previous work. An existing algorithm that you use, alternative solutions proposed, supporting technologies, etc. 
+Recent work motivating this project is summarised below.
 
-After reading this section, a non-expert reader should be able to obtain enough background to understand what \emph{you} have done (by reading subsequent sections), then accurately assess your work against existing relevant related work. 
+Murty et al.\ \citep{murty2024} demonstrated that CBIS-DDSM is a suitable dataset for explainable multimodal deep learning by combining it with the Wisconsin Breast Cancer Dataset in a hybrid architecture. The results supported the choice of CBIS-DDSM as the primary dataset for this project.
 
-Just listing and explaining them is not good enough; from the Introduction section it should be clear that there is a missing gap, which is elaborated on in the related work.
+Nakach, Idri and Goceri \citep{nakach2024} presented a thorough examination of different multimodal fusion techniques used to diagnose breast cancer from mammography, comparing approaches from early, late and feature-level fusion. The review supports the choice of feature-level fusion used in this project, as it manages to find the balance between each modality.
+
+Ghasemi et al.\ \citep{ghasemi2024} carried out a systematic scoping review of explainable AI techniques in the diagnosis of breast cancer, including SHAP, Grad-CAM and LIME. This research provided an understanding of current XAI approaches and their strengths and weaknesses, and was particularly useful in scoping the methods actually used in this project and in justifying the use of Grad-CAM and SHAP in the framework proposed here.
+
+The CBIS-DDSM dataset itself \citep{cbisddsm} is accessed via Kaggle, which offers a pre-processed JPEG format of the original dataset with reduced file size compared to the raw DICOM release. This pre-processed export was the basis for the pipeline described in Section~\ref{sec:methodology}.
+
+Ahmed et al.\ \citep{ahmed2025} presented a multi-scale vision transformer with optimised feature fusion for mammogram-based breast cancer classification. Their own baseline comparison implemented ResNet50 rather than a transformer, and their studies of feature fusion methods practically supported the decision to compare a vision transformer against CNNs in this project rather than assuming that CNNs were better to use.
+
+Al-Hejri et al.\ \citep{alhejri2025} combined vision transformers with explainable AI and patient risk factors to improve breast cancer prediction. Their work shows how explainability and multimodal inputs can be used together in a single AI model with practical applications, and gave insight into how the explainability suite in this project could be extended in future work.
+
+Overall, these results provide a fairly convincing demonstration that CBIS-DDSM represents an appropriate and well-validated benchmark, that multimodal and Vision Transformer-based fusion approaches represent a promising research direction, and that methods of model interpretation such as Grad-CAM, SHAP and LIME are increasingly expected to accompany high accuracy, rather than to be considered optional. In contrast, it is relatively uncommon for a single integrated pipeline to include all of these components. Here a working multimodal model is described that is compared directly with an authentic image-only reference for several candidate architectures, and combined with a complete system of methods for interpretation of both image and clinical information that provides a quantitative confirmation of the reliability of image-based interpretations.
 
 \section{Proposed Methodology}
-This section should provide a clear, detailed, and technically rigorous description of the proposed method. It should explain the algorithms (Machine learning or deep learning models), mathematical methods, and data processing steps in enough detail for a knowledgeable reader to reproduce and verify the work. 
+\label{sec:methodology}
 
-Organize this section into logical subsections, beginning with an overview of the overall approach before describing each component step by step, ensuring each subsection builds on previously introduced concepts. For example, your subsection could be: Hypothesis, Problem Statement, Model Selection, Data Processing, Evaluation Criteria. 
+\subsection{Problem}
+The goal is to perform binary classification on mammographic images, and on associated clinical variables when applying a multimodal approach, to predict whether the corresponding mass represents malignant pathology. For case $i$, let $x^{(i)}$ represent the preprocessed mammogram and $c^{(i)}$ the corresponding vector of one-hot encoded clinical features (including mammographic density, mass shape, margin characteristics and BI-RADS assessment). The baseline model learns a function $f(x_i) \to y_i \in \{0,1\}$ whereas the multimodal model learns $f(x_i, c_i) \to y_i$. In both cases, training was performed to minimize cross-entropy loss with respect to true clinical outcomes.
 
-This section can also include relevant mathematical formulas where appropriate. 
+\subsection{Dataset and Pre-processing}
+The methods were applied to the curated breast imaging subset of the digital database for screening mammography, and preprocessed JPEG representations of all images were accessed from the associated dataset available on Kaggle \citep{cbisddsm}. Combined training and test data sets for mass and calcification cases yielded 3{,}568 cases with identifiable images after mapping original DICOM file locations to corresponding JPEG images. Cases were randomly divided into training, validation and test groups in a 70/15/15 ratio at the level of individual patients rather than individual images, to prevent any single patient's images from appearing in more than one group. Because the original dataset contained multiple images for many individual patients, use of an image-based rather than a patient-based allocation of cases would have resulted in excessive leakage of information concerning cases that had already been partially evaluated.
 
-Focus on the formal and algorithmic aspects of the solution rather than programming or implementation details, which should be reserved for the implementation section. Notice the format for Algorithm~\ref{alg}. 
+Each mammogram was converted to grayscale, and processed to eliminate non-tissue artifacts (e.g., scan labels and borders) by retaining only the largest contiguous bright region. The resulting images were then enhanced with contrast-limited adaptive histogram equalization (CLAHE, clip limit 2.0 and tile grid $8 \times 8$), and resampled to $224 \times 224$ pixels for conversion to three-channel RGB. Application of CLAHE occurred prior to resampling to ensure that contrast enhancement was performed on a high-resolution image with substantial preservation of fine detail, and not on an already low-resolution, information-poor representation of the image.
 
-\begin{algorithm}
+In addition, images were subjected to random rotations, horizontal and vertical reflections, random resampled crops and variations in brightness and contrast, to minimize overfitting in view of the relatively small number of training images.
+
+\subsection{Model Architectures}
+Three candidate architectures were evaluated as single-modality reference systems: ResNet50, EfficientNetV2-S and a vision transformer (ViT-B/16), all trained with initial weights derived from pre-trained ImageNet representations and with replacement of the final classification layer for binary outputs. This approach was appropriate for the goal of identifying the optimal architecture, rather than for assuming a preference for ResNet50.
+
+\subsection{Multimodal Fusion}
+The multimodal system incorporated ResNet50 as its image representation, with elimination of the final classification layer to provide a 2048-dimensional representation of the image. This representation was combined with a small two-layer neural network that encoded the one-hot representation of clinical features into a 64-dimensional representation. Combined representations were then processed with a fusion classifier comprising 256 hidden units and a final layer providing binary outputs. This constituted a strategy for feature-level integration, selected over alternative strategies for earlier or later integration of information based on the literature describing approaches to multimodal integration presented in Section~2.
+
+\subsection{Training the Model}
+Both models were trained using the Adam optimiser (learning rate $1\times10^{-4}$, weight decay $1\times10^{-5}$) with cross-entropy loss, a batch size of 64, and mixed-precision training. Training ran for up to 20 epochs with early stopping on validation ROC-AUC (patience of 5 epochs), and a learning-rate scheduler that halved the learning rate if validation AUC plateaued for two epochs. The high-level training loop, shared by both models, is summarised in Algorithm~\ref{alg}.
+
+\begin{algorithm}[t]
     \begin{algorithmic}
-        \IF{some condition is true}
-            \STATE do some processing
-        \ELSIF{some other condition is true}
-            \STATE do some different processing
-        \ELSE
-            \STATE do the default actions
-        \ENDIF
+        \FOR{epoch $= 1$ to MAX\_EPOCHS}
+            \STATE run one training pass over the training set, updating model weights
+            \STATE run one evaluation pass over the validation set (no gradient updates)
+            \IF{validation ROC-AUC improved on this epoch}
+                \STATE save a model checkpoint
+                \STATE reset the early-stopping counter to 0
+            \ELSE
+                \STATE increment the early-stopping counter
+            \ENDIF
+            \IF{early-stopping counter exceeds PATIENCE}
+                \STATE stop training
+            \ENDIF
+        \ENDFOR
+        \STATE \textbf{return} the checkpoint with the best validation ROC-AUC
     \end{algorithmic}
-\caption{This is an example algorithm.}
+\caption{Training loop with early stopping (used for both models).}
 \label{alg}
 \end{algorithm}
 
 \section{Implementation}
-The implementation section focuses on the major programming problems and details such as the overall organization of the source code, major dependencies, etc. This should be kept concise and should be developed top-down, focusing on anything that is maybe not standard good practice, or that has a non-obvious implementation. 
+The complete pipeline was implemented in Python with models based on PyTorch and Torchvision, pre-processing with OpenCV, data splitting and evaluation with scikit-learn, and with SHAP, LIME and scikit-image for model interpretability. The project is available both as a single interactive Jupyter notebook executed and run on Google Colab with a T4 GPU, and as an equivalent set of stand-alone Python scripts for execution in batch mode. Several implementation details were non-trivial and required substantial time for debugging.
 
-An appendix (C) can be used for more details if needed, which will not be counted in the report page limit. 
+First, the original DICOM file names for each image stored in the CBIS-DDSM CSV metadata are replaced with new names for the JPEG images stored within each directory, resulting in failure of any direct join of metadata information to JPEG files. This was resolved by matching instead to the DICOM SeriesInstanceUID used to create each directory, which was preserved. Second, processing of images to remove artifacts and to apply CLAHE was computationally expensive per image, and re-application for each image on every training epoch yielded extremely slow execution times for early versions of the pipeline.
+
+This was overcome by performing artifact removal and CLAHE for each image only once, and by storing the resulting images as NumPy arrays on disk with a thread pool to allow concurrent execution of the computationally intensive OpenCV C++ code without release of the GIL. Subsequent training epochs simply retrieved the preprocessed and cached arrays.
+
+Third, initial use of the SHAP KernelExplainer exhausted GPU memory and caused the notebook to crash. This resulted from the fact that KernelExplainer invokes its prediction function thousands of times per sample, and the original implementation re-computed the entire forward pass of the ResNet50 for every such call despite holding the input image fixed and varying only the clinical vector. Caching and reusing the fixed image representation outside the loop of calls to the explainer reduced computational requirements to well under one minute and eliminated GPU memory exhaustion.
+
+Fourth, application of Grad-CAM to the multimodal model required minimal adaptation. The implementation of Grad-CAM assumes availability of a model whose forward operation accepts a single image as input, whereas the forward operation of the multimodal model accepts both an image and a clinical vector. Use of a thin class to fix the clinical vector for each sample and to provide a single-argument forward operation enabled complete reuse of the existing implementation of Grad-CAM for both pathways of the model.
+
+All results were recorded in a well-organized output directory, and identical methods for data preprocessing, caching and splitting of data sets were applied to all aspects of model training, evaluation and explanation. As a result, the composition of the test set seen by each component of the pipeline was identical throughout.
 
 \section{Results and Discussion}
-This section discusses the proposed and existing methods/models in the light of the initially stated problem requirements and limitations. 
 
-This typically involves some sort of experimental evaluation which leads to some type of qualitative or quantitative results. 
+\subsection{Experimental Setup}
+All results below come from a single, complete run of the full pipeline on the CBIS-DDSM mass and calcification cases (3{,}568 resolvable images: 2{,}455 training, 560 validation, 553 test, split at the patient level as described in Section~\ref{sec:methodology}). Both the baseline and multimodal models were trained for up to 20 epochs with early stopping; the three-architecture comparison (Section~5.3) used the same 20-epoch budget for all three backbones, to keep that comparison fair.
 
-\textbf{Quantitative results} include observed numbers indicating performance timings (processing speed) or accuracy measures of the given implementation and test datasets. If possible, statistical tests and analysis should be given, or, where applicable, formal proofs. Meaningful and informative numerical results must be complete and unambiguous. 
-
-Explain in detail how the evaluation has been designed, as well as the experimental setup and test cases. This includes an accurate description of the \textbf{training, validation, and testing data (type, properties, size, etc.)} as well as the evaluation metrics (accuracy, precision, recall, etc.). Example Table~\ref{tab} provided below:
+\subsection{Baseline versus Multimodal}
+Table~\ref{tab} reports the full set of test-set metrics for the image-only ResNet50 baseline and the multimodal fusion model.
 
 \begin{table}[t]
 \centering
-\begin{tabular}{|cc|c|}
-\hline
-Model      & Accuracy      & Precision      \\
-\hline
-$0     $ & $0     $ & $0     $ \\
-$1     $ & $1     $ & $1     $ \\
-$\vdots$ & $\vdots$ & $\vdots$ \\
-$9     $ & $9     $ & $9     $ \\
-\hline
+\begin{tabular}{lcccccc}
+\toprule
+\textbf{Model} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{Specificity} & \textbf{F1} & \textbf{ROC-AUC} \\
+\midrule
+Baseline (ResNet50) & 66.0\% & 52.2\% & 55.3\% & 71.9\% & 53.7\% & 0.708 \\
+Multimodal (image + clinical) & 82.3\% & 72.4\% & 81.2\% & 82.9\% & 76.6\% & 0.911 \\
+\bottomrule
 \end{tabular}
-\caption{This is an example table.}
+\caption{Baseline (ResNet50) vs.\ multimodal test-set performance on the CBIS-DDSM held-out test set.}
 \label{tab}
 \end{table}
 
-\textbf{Qualitative results} may be reported if applicable. Qualitative results clearly show the features and functionality of the completed work, indicating if and how they are novel or different from prior work. Qualitative results are especially suitable if something new has been achieved that no-one has done before in the same way. Example Figure~\ref{fig} provided below:
+The multimodal model significantly outperformed the image-only baseline for all metrics, especially for recall (from 55.3\% to 81.2\%) and ROC-AUC (from 0.708 to 0.911). This comparison is illustrated in Figure~\ref{fig:baseline}.
+
 \begin{figure}[t]
 \centering
-\centering
-    \includegraphics[width=0.3\textwidth]{example-image.png}
-\caption{This is an example Graph figure.}
-\label{fig}
+\includegraphics[width=0.75\textwidth]{figures/fig1_baseline_vs_multimodal.png}
+\caption{Baseline (ResNet50) versus multimodal test-set performance across all metrics.}
+\label{fig:baseline}
 \end{figure}
 
-Essentially, the goal of the experimental results is to convince the reader by numbers, tests and images (and maybe user studies), giving some sort of proof why the proposed solution is good, different and/or better than other solutions.
+Recall was the most heavily weighted component of the evaluation criteria, because misclassification of malignant tumours represents the major clinical cost associated with a screening application. As a result, the magnitude of the overall improvement represents the single most important result of the study and directly confirms the hypothesis that information present in structured clinical data cannot always be recovered from the image alone.
+
+\subsection{Architecture Comparison}
+ResNet50, EfficientNetV2-S and ViT-B/16 were compared as image-only baseline models trained with equal 20-epoch budgets. ResNet50 achieved a recall of 0.553 and ROC-AUC of 0.708, whereas EfficientNetV2-S and ViT-B/16 achieved 0.548 and 0.736, and 0.604 and 0.696, respectively.
+
+Earlier results of this comparison with a shorter 10-epoch budget for the two non-ResNet50 models were remarkably different: recall for ViT-B/16 was only 0.228 under this shorter training time, by far the poorest of the three models. Equal training times for all three architectures eliminated nearly all of this deficit and ultimately resulted in the best recall of any of the models. This supports the well-documented observation that greater amounts of fine-tuning are required to adapt networks pretrained on natural images to a small dataset with a large degree of domain shift, because they lack the inherent bias toward local features and translation invariance that provides a substantial advantage to CNNs when training data are limited.
+
+EfficientNetV2-S provided the highest ROC-AUC of any of the models and thus represents a reasonable candidate for additional work. However, ResNet50 was retained as the backbone for the multimodal model of this project to maintain consistency with the extensive literature presented in Section~2 and to implement the architecture originally proposed for this project.
+
+\subsection{Explainability}
+Heat maps for the multimodal model in Figure~\ref{fig:gradcam} localized predominantly to the region of the actual mass rather than to adjacent tissue or to the image border, confirming that predictions were based on the lesion and not on some incidental artifact of the imaging process. This qualitative result was confirmed by quantitative measures of faithfulness: mean area under the curve for image deletion was 0.504 (with lower values indicating greater faithfulness), and for image insertion was 0.728 (with higher values indicating greater faithfulness). The large difference between these measures confirmed that pixels identified as important truly contributed to model predictions, and were not simply perceived as appearing plausible.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/fig2_gradcam_heatmaps.png}
+\caption{Grad-CAM heatmaps for the multimodal model on eight test cases (true and predicted labels shown above each image).}
+\label{fig:gradcam}
+\end{figure}
+
+The summary plot for the multimodal model's clinical component (Figure~\ref{fig:shap}) reflects the reasoning of a practicing radiologist. A high BI-RADS score was the strongest single contributor to a malignant prediction, and irregular shape and spiculated margins increased the likelihood of malignancy in the same direction. By contrast, well-marginated lesions and an appearance of obscured margins were associated with a benign outcome. This degree of concordance with clinical experience represents a convenient, though informal, test of whether the clinical component of the model has actually learned a clinically meaningful representation of the data, rather than merely memorizing arbitrary correlations in the training data.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/fig3_shap_summary.png}
+\caption{SHAP summary plot for the multimodal model's clinical feature branch.}
+\label{fig:shap}
+\end{figure}
+
+\subsection{Limitations Observed}
+Two important limitations merit explicit discussion. First, initial performance was quite variable across multiple runs with identical random seeds and hyperparameters, ranging from 66.0 to 71.97\%. Examination of training curves supports a contribution of overfitting to this variability, with attainment of low 0.90 training AUC by 20 epochs and of stable 0.70 validation AUC thereafter. Choice of the ``best'' epoch for early stopping was highly sensitive to the exact point at which validation AUC achieved its peak. In contrast, performance of the multimodal model was substantially less variable across runs, presumably because of the greater consistency of signals available for use in making predictions.
+
+Second, all results presented here were obtained with a single 70/15/15 partition, and should therefore be interpreted as representing a single, reasonably typical example of performance rather than as providing a tightly constrained estimate of true performance. Both of these limitations are again considered in Section~6. Finally, the remaining gap in recall was considerably greater than that observed for the models described previously.
 
 \section{Conclusion}
-The Conclusion section puts the results in perspective, discussing them in relation to other related work in one or at most two paragraphs. Indicate possible (side-)effects and eventual limitations due to the evaluation, but try to keep yourself short and clear. 
+This work aimed to test whether integration of mammogram images with structured clinical information would improve the classification of breast cancer compared with an image-only approach, and result in a truly interpretable rather than accurate-but-opaque model. Results confirmed the hypothesis unequivocally: the multimodal approach increased ROC-AUC from 0.708 to 0.911 and improved recall from 55.3\% to 81.2\% relative to a ResNet50-only approach. Interpretation by application of gradient-weighted class activation mapping, LIME and SHAP for image and clinical components, and supported by quantitative assessment of model faithfulness, provided a largely complete explanation for the model's predictions, and not merely for the predicted outcomes themselves.
 
-Give a short discussion about your results where you focus on what your findings mean. E.g., show how your results and interpretations agree with the original problem question and with other published work, or if there are any other practical applications for your work. 
+Comparison of model architectures revealed an unexpected result: vision transformers achieved nearly complete equivalence with CNN-based architectures for this dataset when provided with equal amounts of training time. Previously apparent differences between architectural approaches were attributable entirely to differences in training time, and thus represented no fundamental incompatibility between transformer architectures and tasks of medical image analysis. As a result, the work made a small but entirely valid contribution beyond the original scope.
 
-State the take-home message of the project that the reader should remember and provide an outlook on possible future work that extends the given solution or fixes specific limitations. 
+The best result of the multimodal model was substantially improved, but not perfect. At the default 0.5 threshold, the model continues to fail to detect a clinically important fraction of malignant cases, an outcome reflecting the high clinical emphasis on recall achieved with this project. However, given the excellent underlying ROC-AUC, adjustment of the decision threshold to achieve greater recall at an acceptable loss of precision represents the most straightforward next step and was not implemented for the version of the pipeline reported here.
 
-Close with a brief description \textbf{(that is different from the Abstract)} of the proposed solution.
+The large inter-run variability in performance of the baseline system further supports extension to patient-level cross-validation, which would convert a single-split estimate of performance into a distribution and provide a substantially more defensible description of model performance. Finally, training with pre-cropped regions of lesions rather than with full mammograms, and application of an attention-based rather than a simple concatenation-based method of feature fusion, were additional promising approaches that could not be evaluated within the available time.
+
+As a result, this project provides a fully evaluated, truly interpretable system for multimodal classification of breast cancer based on actual patient-level data splits and with validation in terms of more than one measure of performance. In addition, the project reports at least one new finding (the effect of training budget on performance of the ViT) that extends well beyond confirmation of previously described results.
 
 \section{Use of AI Declaration}
 I declare that any AI (or GenAI) usage within the project has been recorded and noted within Appendix B or within the main body of the text itself. This includes (but is not limited to) usage of text generation methods including LLMs, text summarisation methods, or image generation methods.
-I understand that failing to divulge use of AI within my work counts as contract cheating and can result in a zero mark for the ECS7036p Individual Project or even failing the module. 
+I understand that failing to divulge use of AI within my work counts as contract cheating and can result in a zero mark for the ECS7036p Individual Project or even failing the module.
 
-Signature: [Type your name here]
+Signature: Eric Kamalendran
 
-\section*{Citations and References [REMOVE THIS SECTION FROM FINAL SUBMISSION]}
-You can manage your bibliography---adding citations and references to other work---through BibTeX.
-Please see \url{https://www.overleaf.com/learn/latex/Bibliography_management_with_bibtex} for guidance.
+\begin{thebibliography}{99}
 
-This template presents the minimal example of how to use it here.
+\bibitem{crukstats}
+Cancer Research UK. (2022). Breast cancer statistics. In \emph{Cancer Research UK}. Cancer Research UK. \url{https://www.cancerresearchuk.org/health-professional/cancer-statistics/statistics-by-cancer-type/breast-cancer}
 
-\LaTeX{} \cite{latex2e} is a set of macros built atop \TeX{} \cite{texbook}.
+\bibitem{murty2024}
+Murty, P. S. R. C., Anuradha, C., Naidu, P. A., Mandru, D., Ashok, M., Atheeswaran, A., Rajeswaran, N., \& Saravanan, V. (2024). Integrative hybrid deep learning for enhanced breast cancer diagnosis: leveraging the Wisconsin Breast Cancer Database and the CBIS-DDSM dataset. \emph{Scientific Reports}, 14(1). \url{https://doi.org/10.1038/s41598-024-74305-8}
 
-\bibliography{refs.bib}
-\bibliographystyle{plain}
+\bibitem{nakach2024}
+Nakach, F.-Z., Idri, A., \& Goceri, E. (2024). A comprehensive investigation of multimodal deep learning fusion strategies for breast cancer classification. \emph{Artificial Intelligence Review}, 57(12). \url{https://doi.org/10.1007/s10462-024-10984-z}
+
+\bibitem{ghasemi2024}
+Ghasemi, A., Hashtarkhani, S., Schwartz, D. L., \& Shaban-Nejad, A. (2024). Explainable artificial intelligence in breast cancer detection and risk prediction: A systematic scoping review. \emph{Cancer Innovation}, 3(5). \url{https://doi.org/10.1002/cai2.136}
+
+\bibitem{cbisddsm}
+CBIS-DDSM: Breast Cancer Image Dataset. (n.d.). In \emph{www.kaggle.com}. Retrieved August 17, 2026, from \url{https://www.kaggle.com/datasets/awsaf49/cbis-ddsm-breast-cancer-image-dataset}
+
+\bibitem{ahmed2025}
+Ahmed, S., Elazab, N., El-Gayar, M. M., Elmogy, M., \& Fouda, Y. M. (2025). Multi-Scale Vision Transformer with Optimized Feature Fusion for Mammographic Breast Cancer Classification. \emph{Diagnostics}, 15(11), 1361. \url{https://doi.org/10.3390/diagnostics15111361}
+
+\bibitem{alhejri2025}
+Al-Hejri, A. M., Sable, A. H., Al-Tam, R. M., Al-antari, M. A., Alshamrani, S. S., Alshmrany, K. M., \& Alatebi, W. (2025). A hybrid explainable federated-based vision transformer framework for breast cancer prediction via risk factors. \emph{Scientific Reports}, 15(1). \url{https://doi.org/10.1038/s41598-025-96527-0}
+
+\bibitem{ali2025}
+Ali, A., Alghamdi, M., Marzuki, S., Tengku Din, T. A., Yamin, M. S., Alrashidi, M., Alkhazi, I., \& Ahmed, N. (2025). Exploring AI Approaches for Breast Cancer Detection and Diagnosis: A Review Article. \emph{Breast Cancer: Targets and Therapy}, 17, 927--947. \url{https://doi.org/10.2147/bctt.s550307}
+
+\bibitem{ahn2023}
+Ahn, J. S., Shin, S., Yang, S.-A., Park, E., Kim, K. H., Cho, S. I., Ock, C. Y., \& Kim, S. (2023). Artificial Intelligence in Breast Cancer Diagnosis and Personalized Medicine. \emph{Journal of Breast Cancer}, 26(5). \url{https://doi.org/10.4048/jbc.2023.26.e45}
+
+\bibitem{zhang2023}
+Zhang, Y., Liu, Y.-L., Nie, K., Zhou, J., Chen, Z., Chen, J.-H., Wang, X., Kim, B., Parajuli, R., Mehta, R. S., Wang, M., \& Su, M.-Y. (2023). Deep Learning-based Automatic Diagnosis of Breast Cancer on MRI Using Mask R-CNN for Detection Followed by ResNet50 for Classification. \emph{Academic Radiology}, 30(Suppl 2), S161--S171. \url{https://doi.org/10.1016/j.acra.2022.12.038}
+
+\bibitem{sossavi2026}
+Sossavi, E., Roy, C., \& Moli\`ere, S. (2026). Artificial intelligence in breast cancer screening: A systematic review and meta-analysis of integration strategies. \emph{European Journal of Radiology Open}, 16, 100727. \url{https://doi.org/10.1016/j.ejro.2026.100727}
+
+\bibitem{saharan2025}
+Saharan, S., Wani, N. A., Chatterji, S., Kumar, N., \& Almuhaideb, A. M. (2025). A Deep Learning and Explainable Artificial Intelligence based Scheme for Breast Cancer Detection. \emph{Scientific Reports}, 15(1). \url{https://doi.org/10.1038/s41598-024-80535-7}
+
+\bibitem{hernstrom2025}
+Hernstr\"om, V., Josefsson, V., Sartor, H., Schmidt, D., Larsson, A.-M., Hofvind, S., Andersson, I., Rosso, A., Hagberg, O., \& L\r{a}ng, K. (2025). Screening performance and characteristics of breast cancer detected in the Mammography Screening with Artificial Intelligence trial (MASAI): a randomised, controlled, parallel-group, non-inferiority, single-blinded, screening accuracy study. \emph{The Lancet Digital Health}, 7(3). \url{https://doi.org/10.1016/s2589-7500(24)00267-x}
+
+\bibitem{lauritzen2023}
+Lauritzen, A. D., von Euler-Chelpin, M. C., Lynge, E., Vejborg, I., Nielsen, M., Karssemeijer, N., \& Lillholm, M. (2023). Assessing Breast Cancer Risk by Combining AI for Lesion Detection and Mammographic Texture. \emph{Radiology}, 308(2). \url{https://doi.org/10.1148/radiol.230227}
+
+\bibitem{anez2025}
+A\~nez, D., Conti, G., Uriarte, J. J., Serrano-Olmedo, J.-J., Mart\'inez-Murillo, R., \& Casanova-Carvajal, O. (2025). Artificial Intelligence Pipeline for Mammography-Based Breast Cancer Detection: An Integrated Systematic Review and Large-Scale Experimental Validation. \emph{Medicina}, 61(12), 2237. \url{https://doi.org/10.3390/medicina61122237}
+
+\end{thebibliography}
 
 \appendix
 
 \section{Appendix A: Reflection}
 \label{appx:reflection}
 
-\textbf{This is a COMPULSORY Appendix. This is not included in the Page Limit [REMOVE THIS LINE FROM FINAL SUBMISSION]}
+The first real difficulty I encountered was remarkably elementary: my very first complete training run failed with a File Not Found Error for a \texttt{.dcm} file that clearly did not exist within the dataset. Eventually, I realized that the metadata provided with CBIS-DDSM still reflected the original structure of DICOM files, whereas the JPEG format of images exported by Kaggle completely changed the naming convention within each folder. When I finally understood that the combination of folder name and DICOM series ID represented the only element that was consistent between the two file formats, the solution was straightforward. However, achieving that understanding required manual inspection of directory listings until patterns of consistency and variability became apparent. Overall, this experience reinforced for me the importance of recognizing that a large fraction of applied deep learning work consists essentially of data logistics. Moreover, failure of the logistics has nothing to do with the model itself.
 
-Reflection is the last part of your report. Include any challenges you faced and how they were resolved. Also, include what you learned from this project. 
+The second major problem was speed, and ultimately a completely different type of crash. My initial versions of the preprocessing pipeline reprocessed every mammogram from scratch on each and every epoch, resulting in an unreasonable amount of time for each complete training run. Subsequent implementation of image caching eliminated that problem. The truly slow performance of the read-only data mount was completely inappropriate for the pattern of many small image reads required by this type of pipeline, and became apparent only at the point of failure. In addition, introduction of SHAP for my purposes resulted in complete failure of the entire session because the prediction function was called thousands of times. The result was an unnecessary and completely inappropriate repetition of the entire forward pass of my ResNet50 network for every call to the prediction function, despite the fact that the input image never changed. Use of a single cached representation of the image's embedding and re-execution of only the small clinical components of my pipeline for each perturbation eliminated this problem and reduced the time required for the entire section to well under one minute. Both provided excellent reminders of the importance of being extremely careful about what actually must be recalculated and what can safely be cached, and represent a level of experience with this type of problem that is substantially greater than that which applies specifically to this dataset.
 
-Reflection should be at least 500 words. 
+The most interesting outcome of the entire project arose from an investigation I had almost ignored altogether. My initial attempt to compare results of ResNet50, EfficientNetV2 and a vision transformer produced substantially less training time for the vision transformer than for either of the other two architectures, primarily because my goal of minimizing overall computational time resulted in very poor performance and misclassification of more than 75\% of malignant cases in the test set. It would have been simple to record this as a failure of ``vision transformer does not work well here'' and to move on. Equal allocation of training time to the three architectures, however, completely reversed the outcome and produced the best recall of all three architectures. This experience reinforced my need to be more skeptical about uncontrolled comparisons and confirmed that the portion of my project that was investigated in the most rigorous manner was the most satisfying part of the work.
+
+Finally, it resulted in a far more realistic appreciation of what it should mean to produce an ``explainable'' result. Initially, I had expected a Grad-CAM heat map to represent essentially the final stage of interpretation. Additional application of LIME for independent validation, and particularly implementation of the deletion and insertion tests for faithfulness, ultimately demonstrated to me that an apparently very plausible heat map provides no evidence at all that it reflects the true behavior of the model. Moreover, I concluded that the task of demonstrating this gap of understanding is substantially more important than the initial effort to produce an interpretable visual representation.
+
+If I were to redo this project, I would incorporate patient-level cross-validation from the beginning instead of reserving it for future work, because the accuracy of the baseline model varied substantially across runs with identical settings. This amount of variability represents my greatest dissatisfaction with the final results, and would be my first priority for improvement with additional time.
 
 \section{Appendix B: AI Prompts/Tools}
 \label{appx:ai_prompt}
 
-\textbf{This is a COMPULSORY Appendix. This is not included in the Page Limit [REMOVE THIS LINE FROM FINAL SUBMISSION]}
+Tools used: Claude (Anthropic), Quillbot and Grammarly.
 
-List of prompts/tools/references that were used in the project and/or report with an Artificial Intelligence (or GenAI) model. This can include Large Language Models (LLMs such as ChatGPT, Claude, Gemini, etc.) image/video generation tools, or AI summarisation Tools.
+Claude was used to aid with the implementation of the project:
 
-\textbf{Failure to include this list can result in Academic Misconduct. [REMOVE THIS LINE FROM FINAL SUBMISSION]}
+\begin{itemize}
+  \item Debugging a \texttt{FileNotFoundError} resulting from a discrepancy between original DICOM file paths in the CBIS-DDSM CSV metadata and the renamed files exported by Kaggle as JPEG images, and applying the SeriesUID-based method for resolving file paths described in Section~4.
+  \item Helped to diagnose why the runtime for Colab was taking too long and how to make it faster.
+  \item Helped to understand the pipeline better and provided research papers to look at.
+  \item Implementing the LIME explanation and the deletion/insertion measure of faithfulness introduced in Section~3.5, after a discussion of which additional methods of explainability would provide a meaningful complement to Grad-CAM and SHAP.
+  \item Providing additional visualizations of evaluation results: per-epoch training curves, precision-recall curves, calibration curves, plots of metric versus threshold and comparison bar charts.
+  \item Reviewed the Colab notebook to check for errors in the code or anything that had been missed.
+  \item Helped to create the README file.
+\end{itemize}
 
+Quillbot \& Grammarly:
+\begin{itemize}
+  \item Helped to correct grammar.
+  \item Helped to paraphrase to make the work more academic in style.
+\end{itemize}
 
 \end{document}
 
@@ -181,3 +297,4 @@ List of prompts/tools/references that were used in the project and/or report wit
 %%% mode: latex
 %%% TeX-master: t
 %%% End:
+
